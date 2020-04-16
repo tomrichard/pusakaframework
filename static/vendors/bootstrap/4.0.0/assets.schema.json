@@ -1,0 +1,8 @@
+{
+	"top":[
+		"css/bootstrap.min.css"
+	],
+	"bot":[
+		"js/bootstrap.min.js"
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"top":[
+		"jquery.min.js",
+		"jquery-ui/jquery-ui.min.css",
+		"jquery-ui/jquery-ui.min.js",
+		"jquery-timepicker/build/jquery.datetimepicker.min.css",
+		"jquery-timepicker/build/jquery.datetimepicker.full.min.js"
+	],
+	"bot":[
+	]
+}

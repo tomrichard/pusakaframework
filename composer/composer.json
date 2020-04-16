@@ -1,0 +1,7 @@
+{
+    "require": {
+        "google/apiclient": "^2.4",
+        "web-token/jwt-core": "^2.1",
+        "mongodb/mongodb": "^1.6"
+    }
+}
