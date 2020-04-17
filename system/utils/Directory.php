@@ -106,6 +106,16 @@ class DirectoryUtils {
 
 	}
 
+	public function make() {
+
+		if(is_dir($this->source)) {
+			return true;
+		}
+
+		return mkdir($this->source, 0777, true);
+
+	}
+
 	// public function __set($property, $value) {
 
 	// 	if(in_array($property, 'error')){

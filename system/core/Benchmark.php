@@ -5,7 +5,11 @@ class Benchmark {
 	
 	static function load() {
 
-		return ( microtime(true) - BENCHMARK_START );
+		$load = ( microtime(true) - BENCHMARK_START );
+
+		$load = number_format((float) $load, 4, '.', ''); 
+
+		return $load;
 
 	}
 

@@ -19,16 +19,19 @@ class Widget {
 
 	function __compile( $text, $___vars ) {
 
-		$pattern  = '/<<\s*([\[\]\w\s\(\)\=\$\"\'><-]+)\s*>>/';
+		$echo  	  = '/<<\s*([\[\]\w\s\(\)\=\$\"\'><-]+)\s*>>/';
+
+		$if  	  = '/@if\(\s*\$(\w+)\s*\)/';
 
 		$lines 	  = preg_split("/((\r?\n)|(\r\n?))/", $text);
 
 		foreach ($lines as $i => $line) {	
 
-			if(preg_match($pattern, $line)) {
+			// echo variable
+			if(preg_match($echo, $line)) {
 				
 				$lines[$i] = preg_replace_callback(
-								$pattern, 
+								$echo, 
 									function($matches) use ($___vars)
 									{
 										extract((array) $___vars);
@@ -48,6 +51,28 @@ class Widget {
 				//($token['pattern'], $token['replace'], $line);
 
 			}
+
+			// if(preg_match($if, $line)) {
+
+			// 	$lines[$i] = preg_replace_callback(
+			// 					$if, 
+			// 						function($matches) use ($___vars)
+			// 						{
+			// 							extract((array) $___vars);
+
+			// 							$__var = strtr(trim($matches[1]), ['$' => '']);
+
+			// 							if(!isset(${$__var})) {
+			// 								return '';
+			// 							}
+
+			// 							return ${$__var};
+
+			// 						}, 
+			// 							$line
+			// 				);
+
+			// }
 
 		}
 

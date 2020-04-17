@@ -28,8 +28,6 @@ class Console {
 				$app 		= $match[1];
 				$file 		= $match[2];
 
-				var_dump($cmd);
-
 				$console 	= $app_dir . path($app) . 'src/' . $file . '.console.php';
 
 

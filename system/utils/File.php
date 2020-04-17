@@ -14,6 +14,7 @@ class FileUtils {
 	private $config;
 	private $location;
 	private $overwrite;
+	private $contents;
 
 	public function __construct($source) {
 
@@ -65,6 +66,23 @@ class FileUtils {
 
 	}
 
+	public function read() {
+
+		$this->contents = file_get_contents($this->source);
+
+		return $this;
+
+	}
+
+	public function replace($replace) {
+
+
+		$this->contents = strtr($this->contents, $replace);
+
+		return $this;
+
+	}
+
 	public function save($save_as = NULL) {
 
 		// source is NULL
@@ -104,7 +122,9 @@ class FileUtils {
 				/*
 				| Error when upload
 				|-------------------------------------- */
-		 		if(!move_uploaded_file($this->source, $save_as)) {
+		 		$content = $this->contents;
+
+		 		if(!file_put_contents($save_as, $content)) {
 		 			throw new IOExceptions("Copy or upload failed.", 6710);
 		 		}
 
