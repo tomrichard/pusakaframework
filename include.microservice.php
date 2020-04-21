@@ -48,6 +48,7 @@ include(ROOTDIR . 'system/http/Response.php');
  * ----------------------------------------- */
 include(ROOTDIR . 'system/microservices/Controller.php');
 include(ROOTDIR . 'system/microservices/Router.php');
+include(ROOTDIR . 'system/microservices/Application.php');
 
 /*
  * UTILS

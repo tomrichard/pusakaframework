@@ -17,7 +17,11 @@ class DirectoryUtils {
 	}
 
 	public function filter($filter) {
+		
 		$this->filter = $filter;
+
+		return $this;
+
 	}
 
 	public function scan($deep, $closure, $parent = NULL) {

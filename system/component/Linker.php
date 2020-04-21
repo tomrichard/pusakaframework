@@ -18,7 +18,7 @@ class Linker {
 
 		if($ext == 'css') {
 			echo PHP_EOL;
-			echo '<link rel="stylesheet" type="text/css" href="'.$url.'"/>';
+			echo '<link media="screen" rel="stylesheet" type="text/css" href="'.$url.'"/>';
 			echo PHP_EOL;
 			return;
 		}

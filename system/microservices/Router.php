@@ -5,6 +5,7 @@ use Pusaka\Core\Loader;
 use Pusaka\Http\Response;
 use ReflectionClass;
 use ReflectionMethod;
+use closure;
 
 class Router {
 
@@ -27,7 +28,7 @@ class Router {
 				switch ($arg_class) {
 					
 					case 'Pusaka\\Core\\Loader' :
-							$arg_value[] 	= $env['loader'];
+							$arg_value[] 	= &$env['loader'];
 						break;
 
 				}
@@ -181,6 +182,168 @@ class Router {
 			self::middleware( $middleware, 'end', $env );
 
 		}
+
+	}
+
+	public static function microservice( $app ) {
+
+		$env 				= [];
+		$var 				= [];
+
+		$__mid_dir 			= ROOTDIR . 'app/middleware/';
+
+		$__root 			= ROOTDIR . 'app/microservice';
+
+		$__path_info 		= $_SERVER['PATH_INFO'] ?? '/';
+
+		$__segments 		= explode('/', $__path_info);
+
+		array_shift($__segments);
+
+		if( $__segments[0] === '' ) {
+			return;
+		}
+
+		$__control 			= NULL;
+
+		$__current 			= $__root;
+
+		$__dump 			= [];
+
+		while( !empty($__segments) ) {
+
+			$__add 			= $__segments[0];
+
+			$__add 			= strtolower($__add);
+
+			if( file_exists( $__file = $__current . '/' . $__add . '.php' ) ) {
+
+				$__control = $__file;
+				break;
+
+			}
+
+			$__dump[] 		= $__add;
+
+			$__current 	    = $__current . '/' . $__add;
+
+			array_shift($__segments);
+
+		}
+
+		$__dump 			= '/' . implode('/', $__dump);
+
+		if( $__dump !== '/' ) {
+			$__path_info 	= strtr( $__path_info, [ $__dump => '' ] );
+		}
+
+		$__path_info 		= str_replace_first('/', '', $__path_info);
+
+		$__path_info 		= explode('/', $__path_info);
+
+		array_shift($__path_info);
+
+		$__path_info 		= implode('/', $__path_info);
+
+		if( $__control !== NULL ) {
+
+			include( $__control );
+
+			foreach ( $app->route as $route => $val ) {
+
+				$route 		= preg_replace('/\{\w+\}/', '(\w+)', strtr($route, ['/' => '\/']));
+
+				$pattern 	= '/^'.$route.'\/?$/';
+
+				if( preg_match($pattern, $__path_info, $match) > 0 ) {
+
+					array_shift($match);
+
+					$var 			= $match;
+
+					$funct 			= $val['action'] ?? function(){};
+
+					// start call controller
+					$env 			= [];
+
+					$env['loader'] 	= new Loader($env);
+
+					$middleware = [];
+
+					if( is_array($funct) ) {
+
+						$mids 		= $funct['middleware'] ?? [];
+
+						if(is_string($mids)) {
+							$mids 	= [$mids];
+						}
+
+						if(!empty($mids)) {
+
+							foreach ($mids as $mid) {
+								
+								$__mid_file 	= $__mid_dir . $mid . '.mw.php';
+
+								if(file_exists($__mid_file)) {
+
+									require_once($__mid_file);
+
+									$__mid_class 		= ucfirst(basename($mid)) . 'Middleware';
+
+									if(!class_exists($__mid_class)) {
+										echo "Error 04 - Middleware class not found.";
+										exit(1);
+									}
+
+									$middleware[] 	= $__mid_class;
+
+								}
+
+							}
+
+						}
+
+						$funct 	= $funct[0];
+
+					}
+
+					if( $funct instanceof closure) {
+
+						// middleware start
+
+						foreach ($middleware as $mid) {
+
+							self::middleware( new $mid, 'begin', $env );
+						
+						}
+
+						// go to
+
+						$controller = new Controller($env);
+
+						$response 	= $controller->__getClosure( $funct, $var );
+
+						Response::out( $response );
+					
+						// middleware end
+
+						foreach ($middleware as $mid) {
+
+							self::middleware( new $mid, 'end', $env );
+						
+						}
+
+					}
+
+					return;
+				
+				}
+
+			}
+
+		}
+
+		return;
 
 	}
 

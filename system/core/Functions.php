@@ -72,3 +72,13 @@ if(!function_exists('composer')) {
 	
 	}
 }
+
+if(!function_exists('d')) {
+	function d($var = NULL) {
+		
+		echo "<pre>";
+		print_r($var);
+		echo "<pre>";
+
+	}
+}

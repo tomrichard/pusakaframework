@@ -2,3 +2,4 @@
 /storage/logs/*.log
 /composer/composer.lock
 /composer/vendor
+/system/core/backup
