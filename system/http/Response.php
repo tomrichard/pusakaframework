@@ -64,11 +64,11 @@ class Response {
 
 	static function file($File) {
 
-		$image = array('gif','jpg','jpeg','png');
+		$image = array('gif','jpg','jpeg','png', 'webp');
 		
 		if($File instanceof FileUtils) {
 
-			if($File->category() == FileUtils::FORM) {
+			if($File->type == FileUtils::FORM) {
 
 				$src = $File->src();
 
@@ -104,14 +104,9 @@ class Response {
 				return;
 			}
 
-			if($File->category() == FileUtils::FILE) {
+			if($File->type == FileUtils::PATH) {
 
-				$file = [
-							'mime' => $File->mime(),
-							'name' => $File->name(),
-							'file' => $File->src(),
-							'ext'  => strtolower(pathinfo($File->name(), PATHINFO_EXTENSION))
-						];
+				$file = $File->attributes();
 
 				if(!file_exists($file['file'])) {
 					echo 'file not found';

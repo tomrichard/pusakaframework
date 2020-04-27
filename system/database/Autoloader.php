@@ -3,7 +3,7 @@ namespace Pusaka\Database;
 
 define('DB_ROOT_SYSTEM_FOLDER', strtr(__DIR__, ['\\' => '/']) . '/' );
 
-$driver_installed = ['mysql', 'mongodb']; 
+$driver_installed = ['mysql', 'mongodb', 'sqlite']; 
 
 /*
  * EXCEPTIONS

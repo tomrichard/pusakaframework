@@ -120,6 +120,16 @@ class DirectoryUtils {
 
 	}
 
+	public function exists() {
+
+		if(is_dir($this->source)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
 	// public function __set($property, $value) {
 
 	// 	if(in_array($property, 'error')){

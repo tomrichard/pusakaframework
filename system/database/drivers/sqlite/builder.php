@@ -1,5 +1,5 @@
 <?php 
-namespace Pusaka\Database\Mysql;
+namespace Pusaka\Database\Sqlite;
 
 use closure;
 

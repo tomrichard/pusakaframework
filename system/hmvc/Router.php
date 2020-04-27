@@ -115,6 +115,7 @@ class Router {
 		/* 
 		| Check and Found Controller
 		|-------------------------------------------- */
+		$fragment 			= '';
 
 		$segments 			= explode('/', $path_info);
 
@@ -150,7 +151,9 @@ class Router {
 			
 			}
 			
-			$controller_dir = $controller_dir . $segments[0] . '/'; 
+			$controller_dir = $controller_dir . $segments[0] . '/';
+
+			$fragment 		= $fragment . $segments[0] . '/';
 			
 			array_shift($segments);
 
@@ -182,12 +185,40 @@ class Router {
 		//---------------------------------------------------------
 		$env = [
 			'segments' 	=> $segments,
+			'fragment' 	=> $fragment,
 			'directory'	=> path(dirname($file_controller))
 		];
 
 		$env['loader'] = new Loader($env);
 
 		$this->env = $env;
+
+		//----------------------------------------------------------
+		// search method
+		//----------------------------------------------------------
+		$method   = 'index';
+
+		if ( !empty($segments) ) 
+		{
+			
+			if ( $segments[0] === $method ) 
+			{
+				array_shift($segments);	
+			}
+			else if ( method_exists($class, $segments[0]) ) 
+			{
+				$method = $segments[0];
+				array_shift($segments);
+			}
+
+		}
+
+		//---------------------------------------------------------
+		// get anotation
+		//---------------------------------------------------------
+		$rc 	= new ReflectionMethod($class, $method);
+		$docm 	= $rc->getDocComment();
+		unset($rc);
 
 		//---------------------------------------------------------
 		// get anotation
@@ -213,7 +244,11 @@ class Router {
 		//---------------------------------------------------------
 		// middleware
 		//---------------------------------------------------------
-		$preg 		= preg_match('/@middleware\s(.+)/', $doc, $match);
+		$preg 		= preg_match('/@middleware\s(.+)/', $docm, $match);
+
+		if( !($preg > 0) ) {
+			$preg 	= preg_match('/@middleware\s(.+)/', $doc, $match);
+		}
 
 		$mid_dir 	= ROOTDIR . 'app/middleware/';
 
@@ -222,24 +257,32 @@ class Router {
 		if(count($match) > 0) {
 
 			$middleware = trim($match[1]);
-		
-			$mid_file 	= $mid_dir . $middleware . '.mw.php';
 			
-			if(!file_exists($mid_file)) {
-				echo "error03";
-				return;
+			if($middleware === '--none') {
+				
+				$middleware = NULL;
+
+			}else {
+
+				$mid_file 	= $mid_dir . $middleware . '.mw.php';
+				
+				if(!file_exists($mid_file)) {
+					echo "error03";
+					return;
+				}
+
+				include( $mid_file );
+
+				$mid_class 	= ucfirst(basename($middleware)) . 'Middleware';
+
+				if(!class_exists($mid_class)) {
+					echo "error04";
+					return;
+				}
+
+				$middleware = new $mid_class;
+
 			}
-
-			include( $mid_file );
-
-			$mid_class 	= ucfirst(basename($middleware)) . 'Middleware';
-
-			if(!class_exists($mid_class)) {
-				echo "error04";
-				return;
-			}
-
-			$middleware = new $mid_class;
 
 		}
 
@@ -256,23 +299,6 @@ class Router {
 		// create instance controller
 		//---------------------------------------------------------
 		$instance = new $class($env);
-
-		$method   = 'index';
-
-		if ( !empty($segments) ) 
-		{
-			
-			if ( $segments[0] === $method ) 
-			{
-				array_shift($segments);	
-			}
-			else if ( method_exists($instance, $segments[0]) ) 
-			{
-				$method = $segments[0];
-				array_shift($segments);
-			}
-
-		}
 
 		if ( !method_exists($instance, $method) ) {
 			echo "error05";

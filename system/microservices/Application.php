@@ -12,64 +12,56 @@ class Application {
 
 	public $route = [];
 
-	function get($url, $funct) {
+	function add($url, $funct, $method = []) {
+
+		$url = '/' . strtr($url, ['/' => '\/']) . '/';
+
+		$url = preg_replace('/\{\w+\}/', '(\w+)', $url);
 
 		$this->route[$url] = [
 
-			'method' => ['GET'],
+			'method' => $method,
 			'action' => $funct
 
 		];
+
+		unset($url);
+
+	}
+
+	function get($url, $funct) {
+
+		$this->add($url, $funct, $method = ['GET']);
 
 	}
 
 	function post($url, $funct) {
 
-		$this->route[$url] = [
-
-			'method' => ['POST'],
-			'action' => $funct
-
-		];
+		$this->add($url, $funct, $method = ['POST']);
 
 	}
 
 	function put($url, $funct) {
 
-		$this->route[$url] = [
-
-			'method' => ['PUT'],
-			'action' => $funct
-
-		];
+		$this->add($url, $funct, $method = ['PUT']);
 
 	}
 
 	function delete($url, $funct) {
 
-		$this->route[$url] = [
-
-			'method' => ['DELETE'],
-			'action' => $funct
-
-		];
+		$this->add($url, $funct, $method = ['DELETE']);
 
 	}
 
 	function options($url, $funct) {
 		
-		$this->route[$url] = [
-
-			'method' => ['OPTIONS'],
-			'action' => $funct
-
-		];
+		$this->add($url, $funct, $method = ['OPTIONS']);
 
 	}
 
 	function serve() {
 
-		Router::microservice( $this );
+		Router::handle( $this );
 
 	}
 

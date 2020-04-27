@@ -8,6 +8,7 @@ use Pusaka\Exceptions\LibraryNotFoundException;
 use Pusaka\Exceptions\ModelNotFoundException;
 
 use Pusaka\Console\Console;
+use Pusaka\Utils\IOUtils;
 
 use stdClass;
 
@@ -207,5 +208,18 @@ class Loader {
 
 	}
 
+	public function services() {
+
+		$dir 	= ROOTDIR . 'app/service/javascript/';
+
+		IOUtils::directory($dir)
+			->filter('/.*\.javascript\.service\.php/')
+			->scan(true, function($file) {
+
+			echo $file;
+
+		});
+
+	}
 
 }
