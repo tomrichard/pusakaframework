@@ -17,11 +17,19 @@ class Widget {
 
 	}
 
+	function id() {
+
+		return 'id'.date('ymdhis').uniqid();
+
+	}
+
 	function __compile( $text, $___vars ) {
 
 		$echo  	  = '/<<\s*([\[\]\w\s\(\)\=\$\"\'><-]+)\s*>>/';
 
 		$if  	  = '/@if\(\s*\$(\w+)\s*\)/';
+
+		$loop 	  = '/@loop(\w+)/';
 
 		$lines 	  = preg_split("/((\r?\n)|(\r\n?))/", $text);
 

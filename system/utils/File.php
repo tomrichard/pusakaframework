@@ -65,7 +65,19 @@ class FileUtils {
 
 	public function seo() {
 
-		return date('Y-m-d-H-i-s-') . strtolower(basename($this->name, '.' . $this->extension));
+		$string = strtolower(basename($this->name, '.' . $this->extension));
+
+		$string = trim($string);
+
+		$string = strtr($string, [' ' => '_']);
+
+		$string = preg_replace('/\W/', '', $string);
+
+		$string = strtr($string, ['_' => '-']);
+
+		$string = preg_replace('/\s+/', '-', $string);
+
+		return date('Y-m-d-H-i-s-') . $string;
 	
 	}
 

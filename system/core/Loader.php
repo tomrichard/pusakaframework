@@ -96,6 +96,20 @@ class Loader {
 
 	public function javascript($__vars = []) {
 
+		$dir 	= ROOTDIR . 'app/service/javascript/';
+
+		if(is_dir($dir)) {
+			
+			IOUtils::directory($dir)
+				->filter('/.*\.javascript\.service\.php/')
+				->scan(true, function($file) {
+
+					include($file);
+
+				});
+		
+		}
+
 		$vars = $this->var;
 
 		if (!is_array($__vars)) {
@@ -205,20 +219,6 @@ class Loader {
 		}else {
 			throw new ModelNotFoundException("Model class not found ( $file )", 3672);
 		}
-
-	}
-
-	public function services() {
-
-		$dir 	= ROOTDIR . 'app/service/javascript/';
-
-		IOUtils::directory($dir)
-			->filter('/.*\.javascript\.service\.php/')
-			->scan(true, function($file) {
-
-			echo $file;
-
-		});
 
 	}
 

@@ -6,7 +6,7 @@ class Compiler {
 	static function compile($text) {
 
 		$tokens   = [
-			// if
+			// dump
 			[
 				'pattern' => '/@d\s*(\([\w\s\(\)\=\$\"\'><-]+\))/',
 				'replace' => '<pre><?php print_r($1); ?></pre>'
@@ -31,7 +31,7 @@ class Compiler {
 				'pattern' => '/@else/',
 				'replace' => '<?php else : ?>'
 			],
-			// else
+			// end if
 			[
 				'pattern' => '/@endif;/',
 				'replace' => '<?php endif; ?>'

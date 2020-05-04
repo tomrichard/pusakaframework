@@ -5,21 +5,19 @@ use Pusaka\Easyui\Lib\Compiler;
 use Pusaka\Console\Command;
 use Pusaka\Utils\IOUtils;
 
-//include(ROOTDIR . 'app/console/pusaka/easyui/lib/Compiler.php');
+class Component extends Command {
 
-class Add extends Command {
+	protected $signature 	= 'pusaka\easyui:component {name}';
 
-	protected $signature 	= 'pusaka\easyui:add {page}';
-
-	protected $description 	= 'Add EasyUI Pages - Pusaka Template Engine';
+	protected $description 	= 'Create EasyUI Component - Pusaka Template Engine';
 
 	public function handle() {
 
 		$tpl 	= ROOTDIR . 'app/console/pusaka/easyui/data/templates/';
 
-		$dir  	= ROOTDIR . 'app/web/www/'; 
+		$dir  	= ROOTDIR . 'app/web/component/'; 
 
-		$page 	= $this->argument('page');
+		$page 	= $this->argument('name');
 
 		$page 	= strtr($page, ['\\' => '/']);
 

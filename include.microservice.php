@@ -4,6 +4,7 @@ include('include.constants.php');
 /* 
  * Exceptions
  * ----------------------------------------- */
+include(ROOTDIR . 'system/exceptions/Terminator.php');
 include(ROOTDIR . 'system/exceptions/Exception.php');
 include(ROOTDIR . 'system/exceptions/ClassNotFoundException.php');
 include(ROOTDIR . 'system/exceptions/ControllerNotFoundException.php');

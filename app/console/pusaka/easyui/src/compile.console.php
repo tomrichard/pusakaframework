@@ -11,7 +11,7 @@ class Compile extends Command {
 
 	protected $signature 	= 'pusaka\easyui:compile {--debug}';
 
-	protected $description 	= 'Compile EasyUI - Pusaka Template Framework';
+	protected $description 	= 'Compile EasyUI - Pusaka Template Engine';
 
 	public function handle() {
 

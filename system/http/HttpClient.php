@@ -45,6 +45,8 @@ class HttpClient {
 
 		$data 		= $options['data'] ?? [];
 
+		$header 	= $options['header'] ?? [];
+
 		$encoded 	= '';
 
 		if(!empty($data)) {
@@ -58,11 +60,9 @@ class HttpClient {
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 		//curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		// curl_setopt($ch, CURLOPT_HTTPHEADER, 
-		// 	[
-		// 		'Content-Type: application/json'
-		// 	]
-		// );
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge([
+			'Content-Type: application/json'
+		], 	$header));
 
 		$result = curl_exec($ch);
 		
