@@ -28,6 +28,8 @@ class push extends Command {
 			echo $output;
 		});
 
+		echo "\r\n";
+
 		$this->exec('git push origin master', function($output) {
 			echo $output;
 		});
