@@ -40,7 +40,7 @@ class push extends Command {
 
 		echo "\r\n";
 
-		$this->exec('git push '.$giturl.' origin master', function($output) {
+		$this->exec('git push --progress "'.$giturl.'" origin master', function($output) {
 			echo $output;
 		});
 
