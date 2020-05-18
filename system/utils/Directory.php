@@ -1,7 +1,7 @@
 <?php 
 namespace Pusaka\Utils;
 
-use Pusaka\Exceptions\IOExceptions;
+use Pusaka\Exceptions\IOException;
 use closure;
 
 class DirectoryUtils {

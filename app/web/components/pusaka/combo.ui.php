@@ -1,1 +1,1 @@
-<?php $component5EB1FFAF85618 = function($id,$e) { ?>				<?php // component : pusaka.alert ?>				<alert>	<?php foreach( $users as $user ) : ?>				<?php echo $user ?>	<?php endforeach; ?></alert>			<?php } $component5EB1FFAF85618("1",2); ?>
+<?php $component5EC1D8A48A796 = function($id,$e) { ?>				<?php // component : pusaka.alert ?>				<alert>	<?php foreach( $users as $user ) : ?>				<?php echo $user ?>	<?php endforeach; ?></alert>			<?php }; $component5EC1D8A48A796("1",2); ?>
