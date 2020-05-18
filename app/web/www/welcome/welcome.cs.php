@@ -10,8 +10,6 @@ use App\Model\User;
 
 use Pusaka\Database\Manager;
 
-include( COMPONENTS );
-
 class WelcomeCS extends Controller {
 
 	function index() {
