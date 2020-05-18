@@ -20,7 +20,7 @@ class push extends Command {
 
 		$url 	 = $gituser->repo;
 		
-		$giturl  = preg_replace('/(https?:\/\/)/', '$1'.'zyraxzonk'.'@', $url);
+		$giturl  = preg_replace('/(https?:\/\/)/', '$1'.$user.'@', $url);
 
 		$comment = $this->argument('comment');
 
@@ -40,7 +40,7 @@ class push extends Command {
 
 		echo "\r\n";
 
-		$this->exec('git push "'.$giturl.'" "origin" master', function($output) {
+		$this->exec('git push "'.$giturl.'"', function($output) {
 			echo $output;
 		});
 
