@@ -28,6 +28,10 @@ class push extends Command {
 			echo $output;
 		});
 
+		$this->exec('git push', function($output) {
+			echo $output;
+		});
+
 	}
 
 }
