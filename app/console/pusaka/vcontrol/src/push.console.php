@@ -20,9 +20,7 @@ class push extends Command {
 
 		$url 	 = $gituser->repo;
 		
-		$giturl  = preg_replace('/(https?:\/\/)/', '$1zyraxzonk'.':'.$pass.'@', $url);
-
-		//die($giturl);
+		$giturl  = preg_replace('/(https?:\/\/)/', '$1'.$user.':'.$pass.'@', $url);
 
 		$comment = $this->argument('comment');
 
