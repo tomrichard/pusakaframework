@@ -198,6 +198,20 @@ class Command {
 
 	}
 
+	public function exec( $command, $out = NULL ) {
+
+		exec($command, $output);
+
+		if( $out !== NULL ) {
+
+			foreach ($output as $line) {
+				$out("\r\n" . $line);
+			}
+
+		}
+
+	}
+
 	public function argument($key) {
 
 		return $this->args[$key] ?? NULL;

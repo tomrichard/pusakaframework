@@ -12,7 +12,21 @@ class push extends Command {
 
 	public function handle() {
 
+		$comment = $this->argument('comment');
+
 		$this->line("comment : " . $comment);
+
+		$this->exec('git add .' , function($output) {
+			echo $output;
+		});
+
+		$this->exec('git status' , function($output) {
+			echo $output;
+		});
+
+		$this->exec('git commit -m "'.$comment.'"' , function($output) {
+			echo $output;
+		});
 
 	}
 
