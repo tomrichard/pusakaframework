@@ -28,7 +28,7 @@ class push extends Command {
 			echo $output;
 		});
 
-		$this->exec('git push', function($output) {
+		$this->exec('git push origin master', function($output) {
 			echo $output;
 		});
 
