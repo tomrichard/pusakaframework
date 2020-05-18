@@ -27,7 +27,7 @@ class DirectoryUtils {
 	public function scan($deep, $closure, $parent = NULL) {
 
 		if(!is_dir($this->source)) {
-			throw new IOExceptions("Directory not found", 6713);
+			throw new IOException("Directory not found", 6713);
 		}
 
 		if($parent == NULL) {
