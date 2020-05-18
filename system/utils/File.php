@@ -148,6 +148,22 @@ class FileUtils {
 
 	}
 
+	public function json($farray = FALSE) {
+
+		if(!is_string($this->source)) {
+			throw new IOException("File not found or selected.", 404);
+		}
+
+		if(!file_exists($this->source) && !$is_url) {
+			throw new IOException("File not found or selected.", 404);	
+		}
+
+		$content = file_get_contents($this->source);
+
+		return json_decode( $content, $farray );
+
+	}
+
 	public function save($save_as = NULL) {
 
 		// source is NULL

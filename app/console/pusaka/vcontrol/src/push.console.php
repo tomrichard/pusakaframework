@@ -12,6 +12,16 @@ class push extends Command {
 
 	public function handle() {
 
+		$gituser = IOUtils::file(ROOTDIR . 'app/console/pusaka/vcontrol/data/gituser.json')->json();
+
+		$user 	 = $gituser->username;
+
+		$pass 	 = $gituser->password;
+
+		$url 	 = $gituser->repo;
+		
+		$giturl  = preg_replace('/(https?:\/\/)/', '$1'.$user.':'.$pass.'@', $url);
+
 		$comment = $this->argument('comment');
 
 		$this->line("comment : " . $comment);
@@ -30,7 +40,7 @@ class push extends Command {
 
 		echo "\r\n";
 
-		$this->exec('git push origin master', function($output) {
+		$this->exec('git push '.$giturl.' origin master', function($output) {
 			echo $output;
 		});
 
