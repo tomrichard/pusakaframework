@@ -1,0 +1,1 @@
+<alert>	<?php foreach( $users as $user ) : ?>				<?php echo $user ?>	<?php endforeach; ?></alert>

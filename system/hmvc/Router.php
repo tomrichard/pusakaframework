@@ -66,15 +66,25 @@ class Router {
 
 	}
 
+	public function find_controller( $segments ) {
+
+
+
+	}
+
 	public function handle() {
 
 		$current_dir 	= [];
 
 		$controller_dir = ROOTDIR . 'app/web/www/';
 
+		$copy_ctrl_dir 	= $controller_dir;
+
 		$path_info 	 	= $_SERVER['PATH_INFO'] ?? '/';
 
 		$routes 	 	= config('routes');
+
+		$def_controller = $routes[':default'];
 
 		if($path_info == '/') {
 			
@@ -118,6 +128,8 @@ class Router {
 		$fragment 			= '';
 
 		$segments 			= explode('/', $path_info);
+
+		$copy_segments 		= $segments;
 
 		$controller 		= NULL;
 		$file_controller 	= NULL;
@@ -163,10 +175,23 @@ class Router {
 
 		// try to call controller
 		//------------------------------------------
-
 		if( !file_exists($file_controller) ) {
-			throw new IOException("File not found [$file_controller]", 3568);
-			return;
+
+			$try_controller  = basename($def_controller);
+
+			$file_controller = $copy_ctrl_dir . $def_controller . '/'. $try_controller . '.cs.php';
+
+			if( !file_exists($file_controller) ) {
+				
+				throw new IOException("File not found [$file_controller]", 3568);
+				return;
+			
+			}
+
+			$segments = $copy_segments;
+
+			$fragment = '/';
+
 		}
 
 		include( $file_controller );

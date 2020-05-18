@@ -2,10 +2,13 @@
 namespace Pusaka\Easyui;
 
 use Pusaka\Easyui\Lib\Compiler;
+use Pusaka\Easyui\Lib\Registered;
+
 use Pusaka\Console\Command;
 use Pusaka\Utils\IOUtils;
+use Pusaka\View\EasyUI;
 
-include(ROOTDIR . 'app/console/pusaka/easyui/lib/Compiler.php');
+include(ROOTDIR . 'app/console/pusaka/easyui/lib/Registered.php');
 
 class Compile extends Command {
 
@@ -23,8 +26,22 @@ class Compile extends Command {
 				//var_dump($file);
 
 				$script = file_get_contents($file);
+				
+				if($script !== '' AND is_string($script)) {
 
-				$script = Compiler::compile($script);
+					$engine = new EasyUI( preg_split('/\n/', $script) );
+
+					$engine->registerDirectives( Registered::directiveList() );
+
+					$engine->registerComponents( Registered::componentList() );
+
+					$engine->registerPipes(  	 Registered::pipeList() 	 );
+
+					$script = $engine->compile()->getCompiled();
+
+					unset($engine);
+
+				}
 
 				$name 	= basename($file, '.easyui.php');
 

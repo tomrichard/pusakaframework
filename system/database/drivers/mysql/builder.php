@@ -218,6 +218,7 @@ class Builder implements BuilderInterface {
 			$column 	= func_get_arg(0);
 			$operator 	= func_get_arg(1);
 			$value 		= func_get_arg(2);
+			$operator 	= ' ' . $operator . ' ';
 
 			if($column instanceof Column) {
 				$column = $value->name;
@@ -232,6 +233,7 @@ class Builder implements BuilderInterface {
 			}else {
 				$value = $this->value($value);
 			}
+
 
 			if(!empty($this->wheres)) {
 				$this->wheres[] = ' AND ' . $column . $operator . $value;

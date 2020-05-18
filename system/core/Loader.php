@@ -98,17 +98,13 @@ class Loader {
 
 		$dir 	= ROOTDIR . 'app/service/javascript/';
 
-		if(is_dir($dir)) {
-			
-			IOUtils::directory($dir)
-				->filter('/.*\.javascript\.service\.php/')
-				->scan(true, function($file) {
+		IOUtils::directory($dir)
+			->filter('/.*\.javascript\.service\.php/')
+			->scan(true, function($file) {
 
-					include($file);
+			include($file);
 
-				});
-		
-		}
+		});
 
 		$vars = $this->var;
 
@@ -210,7 +206,7 @@ class Loader {
 
 	public function model( $model ) {
 
-		$model  = strtr($lib, ['\\' => '/']);
+		$model  = strtr($model, ['\\' => '/']);
 
 		$file 	= ROOTDIR . 'app/database/models/' . $model . '.php';
 

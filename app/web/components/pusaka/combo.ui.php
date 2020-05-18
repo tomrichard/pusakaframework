@@ -1,0 +1,1 @@
+<?php $component5EB1FFAF85618 = function($id,$e) { ?>				<?php // component : pusaka.alert ?>				<alert>	<?php foreach( $users as $user ) : ?>				<?php echo $user ?>	<?php endforeach; ?></alert>			<?php } $component5EB1FFAF85618("1",2); ?>

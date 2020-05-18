@@ -26,6 +26,11 @@ include(ROOTDIR . 'system/utils/File.php');
 include(ROOTDIR . 'system/utils/Directory.php');
 
 /*
+ * VIEW
+ * ----------------------------------------- */
+include(ROOTDIR . 'system/view/EasyUI.php');
+
+/*
  * CONSOLE
  * ----------------------------------------- */
 include(ROOTDIR . 'system/console/Console.php');

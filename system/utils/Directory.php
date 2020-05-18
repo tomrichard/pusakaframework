@@ -1,7 +1,7 @@
 <?php 
 namespace Pusaka\Utils;
 
-use Pusaka\Exceptions\IOException;
+use Pusaka\Exceptions\IOExceptions;
 use closure;
 
 class DirectoryUtils {
@@ -27,7 +27,7 @@ class DirectoryUtils {
 	public function scan($deep, $closure, $parent = NULL) {
 
 		if(!is_dir($this->source)) {
-			throw new IOException("Directory not found", 6713);
+			throw new IOExceptions("Directory not found", 6713);
 		}
 
 		if($parent == NULL) {
